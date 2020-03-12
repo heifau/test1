@@ -1,0 +1,26 @@
+https://github.com/arduino/Arduino/issues/9869
+
+
+It seems, that when compiling a .ino file, somehow #line comments are added in
+string literals defined with R"=====(, when they contain javascript function definitions.
+
+This leads to errors, when the <script> part of the html page in interpreted by the browser/javascript, where "#" is not a valid comment.
+https://github.com/arduino/Arduino/issues/9869
+
+If found them in 
+C:\Users\..\AppData\Local\Temp\arduino_build_853222\sketch\...ino.cpp
+E.g.:
+...
+const char INDEX_HTML1[] =
+R"=====(
+<!doctype html>
+...
+<script>
+...
+#line 51 "C:\\Users\\....ino"
+function myonrestch(xhttp);
+...
+function myonrestch(xhttp) {
+    // sessionStorage.resz = Number(sessionStorage.resz) + 1;
+};
+
